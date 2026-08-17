@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Siêu Cấp Quizee - Trò chơi trắc nghiệm vui nhộn với hàng trăm câu hỏi đa dạng chủ đề, chơi ngay trên trình duyệt.">
+    <title>Siêu Cấp Quizee</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="hieu-ung-nen" aria-hidden="true"></div>
+    <div class="qua-cau-troi-noi" aria-hidden="true">
+        <div class="qua-cau qua-cau-1"></div>
+        <div class="qua-cau qua-cau-2"></div>
+        <div class="qua-cau qua-cau-3"></div>
+        <div class="qua-cau qua-cau-4"></div>
+    </div>
+    <canvas id="phao-hoa" aria-hidden="true"></canvas>
+
+    <button id="nut-am-nhac" onclick="batTatNhac()">🎵 Bật nhạc</button>
+    <audio id="nhac-nen" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop preload="none"></audio>
+
+    <div id="bang-dang-nhap" class="the-giao-dien hien-thi">
+        <h1>🚀 HỆ THỐNG QUIZEE 🚀</h1>
+        <p>Quiz, Coding By GitHub</p>
+        <input type="text" id="ten-nguoi-choi" placeholder="Nhập Tên...">
+        <button class="nut-hanh-dong" onclick="batDauTroChoi()">Bắt Đầu Ngay</button>
+    </div>
+
+    <div id="bang-cau-hoi" class="the-giao-dien">
+        <div id="thanh-thoi-gian"></div>
+        <div id="van-ban-tien-do"></div>
+        <h3 id="tieu-de-cau-hoi"></h3>
+        <div id="khu-vuc-dap-an"></div>
+        <button class="nut-hanh-dong nut-bo-qua" id="nut-bo-qua" onclick="boQuaCauHoi()">BỎ QUA CÂU NÀY</button>
+        <div id="van-ban-trang-thai" aria-live="polite"></div>
+    </div>
+
+    <div id="bang-ket-qua" class="the-giao-dien">
+        <h2>🎉 CHÚC MỪNG ĐÃ HOÀN THÀNH 🎉</h2>
+        <div class="chu-thich">Tổng điểm:</div>
+        <h1 id="diem-so-cuoi-cung">0</h1>
+        <div id="chi-tiet-thong-ke"></div>
+        <button class="nut-hanh-dong nut-choi-lai" onclick="choiLaiTuDau()">Play Again</button>
+    </div>
+
+    <script src="ques.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

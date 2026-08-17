@@ -1,0 +1,320 @@
+:root {
+    --mau-chinh: #8b5cf6;
+    --mau-nen: #2e1065;
+    --mau-dung: #10b981;
+    --mau-sai: #ef4444;
+    --mau-canh-bao: #f59e0b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    height: 100dvh; /* trình duyệt không hỗ trợ sẽ tự bỏ qua, giữ giá trị vh phía trên */
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: sans-serif;
+    color: #333;
+    position: relative;
+    background: #1e0a4d; /* màu nền dự phòng trong lúc lớp hiệu ứng bên dưới chưa kịp vẽ */
+}
+
+/* ===== NỀN ĐỘNG - dùng transform thay vì background-position để trình duyệt giao việc cho GPU ===== */
+.hieu-ung-nen {
+    position: fixed;
+    top: -25%;
+    left: -25%;
+    right: -25%;
+    bottom: -25%;
+    background: linear-gradient(-45deg, #2e1065, #4c1d95, #6d28d9, #312e81);
+    background-size: 400% 400%;
+    will-change: transform;
+    animation: hieuUngNenDiChuyen 18s ease-in-out infinite;
+    z-index: -2;
+    pointer-events: none;
+}
+@keyframes hieuUngNenDiChuyen {
+    0%   { transform: translate3d(0%, 0%, 0) rotate(0deg); }
+    50%  { transform: translate3d(-6%, 5%, 0) rotate(2deg); }
+    100% { transform: translate3d(0%, 0%, 0) rotate(0deg); }
+}
+
+/* ===== Các quả cầu trôi nổi trang trí phía sau - toàn bộ chỉ animate transform ===== */
+.qua-cau-troi-noi {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+.qua-cau {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(45px);
+    opacity: 0.35;
+    will-change: transform;
+}
+.qua-cau-1 { width: 260px; height: 260px; background: #8b5cf6; top: 8%;  left: 8%;   animation: troiNoi1 16s ease-in-out infinite; }
+.qua-cau-2 { width: 220px; height: 220px; background: #ec4899; bottom: 10%; right: 8%; animation: troiNoi2 20s ease-in-out infinite; }
+.qua-cau-3 { width: 190px; height: 190px; background: #3b82f6; top: 55%;  left: 68%;  animation: troiNoi3 14s ease-in-out infinite; }
+.qua-cau-4 { width: 160px; height: 160px; background: #f59e0b; bottom: 28%; left: 18%; animation: troiNoi1 22s ease-in-out infinite reverse; }
+
+@keyframes troiNoi1 { 0%, 100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(30px,-40px,0); } }
+@keyframes troiNoi2 { 0%, 100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(-35px,30px,0); } }
+@keyframes troiNoi3 { 0%, 100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(-25px,-30px,0); } }
+
+/* ===== Nút bật nhạc ===== */
+#nut-am-nhac {
+    position: absolute;
+    top: max(16px, env(safe-area-inset-top));
+    right: max(16px, env(safe-area-inset-right));
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50px;
+    color: white;
+    padding: 10px 18px;
+    font-weight: bold;
+    font-size: clamp(12px, 3vw, 15px);
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    z-index: 100;
+}
+#nut-am-nhac:hover { background: rgba(255, 255, 255, 0.4); transform: scale(1.1); }
+#nut-am-nhac:active { transform: scale(0.95); }
+
+/* ===== Thẻ giao diện (đăng nhập / câu hỏi / kết quả) ===== */
+.the-giao-dien {
+    display: none;
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    padding: clamp(20px, 5vw, 30px);
+    border-radius: clamp(16px, 4vw, 25px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    width: min(92vw, 450px);
+    text-align: center;
+}
+.the-giao-dien.hien-thi {
+    display: block;
+    will-change: transform;
+    animation-name: xuatHienThe, bayLoLung;
+    animation-duration: 0.55s, 6s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1), ease-in-out;
+    animation-iteration-count: 1, infinite;
+    animation-delay: 0s, 0.55s;
+    animation-fill-mode: both, none;
+}
+@media (max-height: 600px) {
+    .the-giao-dien.hien-thi {
+        max-height: 94vh;
+        max-height: 94dvh;
+        overflow-y: auto;
+    }
+}
+@keyframes xuatHienThe {
+    from { opacity: 0; transform: translateY(24px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes bayLoLung {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+#bang-dang-nhap h1 {
+    font-size: clamp(1.5rem, 6vw, 2.1rem);
+    margin: 0 0 8px;
+}
+
+/* ===== Thanh thời gian - animate transform (GPU) thay vì width (layout) ===== */
+#thanh-thoi-gian {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 8px;
+    width: 100%;
+    background: var(--mau-dung);
+    transform-origin: left center;
+    transform: scaleX(1);
+    border-radius: 25px 25px 0 0;
+    will-change: transform;
+}
+#thanh-thoi-gian.canh-bao { background: var(--mau-canh-bao); }
+#thanh-thoi-gian.nguy-hiem { background: var(--mau-sai); }
+
+/* ===== Nút bấm ===== */
+.nut-chon, .nut-hanh-dong {
+    width: 100%;
+    padding: 15px;
+    margin: 8px 0;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    background: white;
+    word-break: break-word;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+.nut-chon {
+    animation: hieuUngVaoCau 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.nut-chon:hover:not(:disabled) {
+    border-color: var(--mau-chinh);
+    background: #f5f3ff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+}
+.nut-chon:active:not(:disabled), .nut-hanh-dong:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.chon-dung {
+    background: var(--mau-dung) !important;
+    color: white;
+    border-color: var(--mau-dung) !important;
+    transform: scale(1.03);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25), 0 10px 20px rgba(16, 185, 129, 0.35);
+    animation: nhipDung 0.5s ease;
+}
+@keyframes nhipDung {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(1.08); }
+    100% { transform: scale(1.03); }
+}
+
+.chon-sai {
+    background: var(--mau-sai) !important;
+    color: white;
+    border-color: var(--mau-sai) !important;
+    animation: rungLac 0.4s ease;
+}
+@keyframes rungLac {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.nut-hanh-dong {
+    background: var(--mau-chinh);
+    color: white;
+    border: none;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+.nut-hanh-dong:hover:not(:disabled) {
+    background: #7c3aed;
+    transform: translateY(-2px);
+}
+.nut-bo-qua { background: #64748b; margin-top: 15px; }
+.nut-bo-qua:hover:not(:disabled) { background: #475569; }
+
+/* ===== Ô nhập liệu ===== */
+input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border: 2px solid #ddd;
+    font-size: 16px; /* giữ >=16px để tránh iOS Safari tự zoom khi focus */
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+input[type="text"]:focus {
+    border-color: var(--mau-chinh);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+}
+
+/* ===== Văn bản trạng thái / tiến độ / tiêu đề câu hỏi ===== */
+#van-ban-trang-thai {
+    margin-top: 15px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    min-height: 30px;
+    transition: color 0.3s ease;
+}
+#van-ban-tien-do {
+    color: var(--mau-chinh);
+    font-weight: 900;
+    margin-bottom: 10px;
+    font-size: clamp(0.95rem, 3vw, 1.1rem);
+}
+#tieu-de-cau-hoi {
+    font-size: clamp(1.05rem, 4vw, 1.3rem);
+    line-height: 1.5;
+    color: #1e1e1e;
+}
+
+/* Hiệu ứng xuất hiện dùng chung cho các phần tử được tạo động (nút chọn, ô nhập, tiêu đề câu hỏi...) */
+@keyframes hieuUngVaoCau {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.hieu-ung-vao {
+    animation: hieuUngVaoCau 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ===== Màn hình kết quả ===== */
+#bang-ket-qua h2 {
+    color: #3b82f6;
+    font-size: clamp(1.4rem, 5.5vw, 2rem);
+    margin-top: 0;
+}
+#bang-ket-qua .chu-thich {
+    font-size: 1.2rem;
+    color: #64748b;
+}
+#diem-so-cuoi-cung {
+    color: var(--mau-dung);
+    font-size: clamp(3rem, 14vw, 5rem);
+    margin: 10px 0;
+    text-shadow: 2px 2px 0px #d1fae5;
+}
+#chi-tiet-thong-ke {
+    text-align: left;
+    background: #f1f5f9;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    line-height: 2;
+    margin-bottom: 20px;
+    color: #334155;
+    border: 2px dashed #cbd5e1;
+}
+.nut-choi-lai {
+    background: #3b82f6;
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+}
+.nut-choi-lai:hover:not(:disabled) { background: #2563eb; }
+
+/* ===== Canvas hiệu ứng pháo hoa giấy khi hoàn thành ===== */
+#phao-hoa {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* ===== Tôn trọng lựa chọn "giảm chuyển động" của người dùng ===== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
