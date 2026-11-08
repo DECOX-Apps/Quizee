@@ -97,6 +97,7 @@ function taiCauHoiHienTai() {
 
     const vanBanTrangThai = document.getElementById('van-ban-trang-thai');
     vanBanTrangThai.innerText = "";
+    document.getElementById('khung-giai-thich').innerHTML = "";
 
     const khuVuc = document.getElementById('khu-vuc-dap-an');
     khuVuc.innerHTML = "";
@@ -169,7 +170,7 @@ function boQuaCauHoi(hetGio = false) {
         vanBanTrangThai.innerText = "Đã Bỏ Qua!";
         vanBanTrangThai.style.color = "var(--mau-canh-bao)";
     }
-    thoiGianChuyenCau = setTimeout(chuyenCauTiepTheo, 1500);
+    if (!hienGiaiThich(-1)) thoiGianChuyenCau = setTimeout(chuyenCauTiepTheo, 1500);
 }
 
 function kiemTraTracNghiem(viTriChon, viTriDung) {
@@ -190,7 +191,7 @@ function kiemTraTracNghiem(viTriChon, viTriDung) {
         vanBanTrangThai.innerText = "Sai!";
         vanBanTrangThai.style.color = "var(--mau-sai)";
     }
-    thoiGianChuyenCau = setTimeout(chuyenCauTiepTheo, 2000);
+    if (!hienGiaiThich(viTriChon)) thoiGianChuyenCau = setTimeout(chuyenCauTiepTheo, 2000);
 }
 
 function kiemTraTuLuan(giaTriNhap, danhSachDapAn) {
@@ -209,6 +210,32 @@ function kiemTraTuLuan(giaTriNhap, danhSachDapAn) {
         vanBanTrangThai.style.color = "var(--mau-sai)";
     }
     thoiGianChuyenCau = setTimeout(chuyenCauTiepTheo, 2000);
+}
+
+function hienGiaiThich(viTriChon) {
+    const cauHoi = danhSachHienTai[viTriHienTai];
+    if (!cauHoi || !cauHoi.e) return false;
+    const khung = document.getElementById('khung-giai-thich');
+    const dapAnDung = cauHoi.o[cauHoi.c];
+    let dongChon;
+    if (viTriChon < 0) {
+        dongChon = '<p class="gt-chon gt-bo">Bạn chưa chọn đáp án nào.</p>';
+    } else if (viTriChon === cauHoi.c) {
+        dongChon = `<p class="gt-chon gt-dung">✅ Bạn chọn <b>${cauHoi.o[viTriChon]}</b> — chính xác!</p>`;
+    } else {
+        dongChon = `<p class="gt-chon gt-sai">❌ Bạn chọn <b>${cauHoi.o[viTriChon]}</b> — chưa đúng.</p>`;
+    }
+    khung.innerHTML = `${dongChon}<p>Đáp án đúng: <b>${dapAnDung}</b></p><p>💡 ${cauHoi.e}</p>`;
+    const nutTiep = document.createElement('button');
+    nutTiep.className = 'nut-hanh-dong';
+    nutTiep.innerText = viTriHienTai + 1 >= danhSachHienTai.length ? 'Xem kết quả' : 'Câu tiếp theo →';
+    nutTiep.addEventListener('click', () => {
+        clearTimeout(thoiGianChuyenCau);
+        chuyenCauTiepTheo();
+    });
+    khung.appendChild(nutTiep);
+    khung.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return true;
 }
 
 function khoaTatCaNut() {

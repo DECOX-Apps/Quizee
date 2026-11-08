@@ -301,3 +301,19 @@ input[type="text"]:focus {
         scroll-behavior: auto !important;
     }
 }
+
+#khung-giai-thich { text-align: left; }
+#khung-giai-thich:not(:empty) {
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: #f1f5f9;
+    border-radius: 14px;
+    border-left: 5px solid var(--mau-chinh);
+    font-size: 15px;
+    line-height: 1.5;
+    color: #1e293b;
+}
+#khung-giai-thich p { margin: 6px 0; }
+.gt-dung { color: var(--mau-dung); }
+.gt-sai { color: var(--mau-sai); }
+.gt-bo { color: var(--mau-canh-bao); }
