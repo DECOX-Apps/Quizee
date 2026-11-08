@@ -102,12 +102,7 @@ body {
 .the-giao-dien.hien-thi {
     display: block;
     will-change: transform;
-    animation-name: xuatHienThe, bayLoLung;
-    animation-duration: 0.55s, 6s;
-    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1), ease-in-out;
-    animation-iteration-count: 1, infinite;
-    animation-delay: 0s, 0.55s;
-    animation-fill-mode: both, none;
+    animation: xuatHienThe 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @media (max-height: 600px) {
     .the-giao-dien.hien-thi {
@@ -147,6 +142,9 @@ body {
 #thanh-thoi-gian.nguy-hiem { background: var(--mau-sai); }
 
 .nut-chon, .nut-hanh-dong {
+    touch-action: manipulation;
+    position: relative;
+    z-index: 2;
     width: 100%;
     padding: 15px;
     margin: 8px 0;

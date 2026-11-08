@@ -323,3 +323,17 @@ function xuLyThayDoiKichThuoc() {
 window.addEventListener('resize', xuLyThayDoiKichThuoc);
 window.addEventListener('orientationchange', canChinhKichThuoc);
 canChinhKichThuoc();
+
+function ganSuKien() {
+    const gan = (id, ham) => {
+        const nut = document.getElementById(id);
+        if (nut) nut.addEventListener('click', ham);
+    };
+    gan('nut-tiep-tuc', tiepTucDoVui);
+    gan('nut-nhap-ma', moOMaCode);
+    gan('nut-xac-nhan', xacNhanMa);
+    gan('nut-quay-lai', quayLaiMenu);
+    const o = document.getElementById('o-nhap-ma');
+    if (o) o.addEventListener('keydown', e => { if (e.key === 'Enter') xacNhanMa(); });
+}
+ganSuKien();
