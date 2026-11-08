@@ -17,8 +17,7 @@ html, body {
 body {
     margin: 0;
     height: 100vh;
-    height: 100dvh; /* trình duyệt không hỗ trợ sẽ tự bỏ qua, giữ giá trị vh phía trên */
-    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    height: 100dvh; padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,10 +25,8 @@ body {
     font-family: sans-serif;
     color: #333;
     position: relative;
-    background: #1e0a4d; /* màu nền dự phòng trong lúc lớp hiệu ứng bên dưới chưa kịp vẽ */
-}
+    background: #1e0a4d; }
 
-/* ===== NỀN ĐỘNG - dùng transform thay vì background-position để trình duyệt giao việc cho GPU ===== */
 .hieu-ung-nen {
     position: fixed;
     top: -25%;
@@ -49,7 +46,6 @@ body {
     100% { transform: translate3d(0%, 0%, 0) rotate(0deg); }
 }
 
-/* ===== Các quả cầu trôi nổi trang trí phía sau - toàn bộ chỉ animate transform ===== */
 .qua-cau-troi-noi {
     position: fixed;
     inset: 0;
@@ -73,7 +69,6 @@ body {
 @keyframes troiNoi2 { 0%, 100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(-35px,30px,0); } }
 @keyframes troiNoi3 { 0%, 100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(-25px,-30px,0); } }
 
-/* ===== Nút bật nhạc ===== */
 #nut-am-nhac {
     position: absolute;
     top: max(16px, env(safe-area-inset-top));
@@ -94,7 +89,6 @@ body {
 #nut-am-nhac:hover { background: rgba(255, 255, 255, 0.4); transform: scale(1.1); }
 #nut-am-nhac:active { transform: scale(0.95); }
 
-/* ===== Thẻ giao diện (đăng nhập / câu hỏi / kết quả) ===== */
 .the-giao-dien {
     display: none;
     position: relative;
@@ -137,7 +131,6 @@ body {
     margin: 0 0 8px;
 }
 
-/* ===== Thanh thời gian - animate transform (GPU) thay vì width (layout) ===== */
 #thanh-thoi-gian {
     position: absolute;
     top: 0;
@@ -153,7 +146,6 @@ body {
 #thanh-thoi-gian.canh-bao { background: var(--mau-canh-bao); }
 #thanh-thoi-gian.nguy-hiem { background: var(--mau-sai); }
 
-/* ===== Nút bấm ===== */
 .nut-chon, .nut-hanh-dong {
     width: 100%;
     padding: 15px;
@@ -220,15 +212,13 @@ body {
 .nut-bo-qua { background: #64748b; margin-top: 15px; }
 .nut-bo-qua:hover:not(:disabled) { background: #475569; }
 
-/* ===== Ô nhập liệu ===== */
 input[type="text"] {
     width: 100%;
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 12px;
     border: 2px solid #ddd;
-    font-size: 16px; /* giữ >=16px để tránh iOS Safari tự zoom khi focus */
-    box-sizing: border-box;
+    font-size: 16px; box-sizing: border-box;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -237,7 +227,6 @@ input[type="text"]:focus {
     box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
 }
 
-/* ===== Văn bản trạng thái / tiến độ / tiêu đề câu hỏi ===== */
 #van-ban-trang-thai {
     margin-top: 15px;
     font-weight: 800;
@@ -257,7 +246,6 @@ input[type="text"]:focus {
     color: #1e1e1e;
 }
 
-/* Hiệu ứng xuất hiện dùng chung cho các phần tử được tạo động (nút chọn, ô nhập, tiêu đề câu hỏi...) */
 @keyframes hieuUngVaoCau {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -266,7 +254,6 @@ input[type="text"]:focus {
     animation: hieuUngVaoCau 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* ===== Màn hình kết quả ===== */
 #bang-ket-qua h2 {
     color: #3b82f6;
     font-size: clamp(1.4rem, 5.5vw, 2rem);
@@ -299,7 +286,6 @@ input[type="text"]:focus {
 }
 .nut-choi-lai:hover:not(:disabled) { background: #2563eb; }
 
-/* ===== Canvas hiệu ứng pháo hoa giấy khi hoàn thành ===== */
 #phao-hoa {
     position: fixed;
     inset: 0;
@@ -309,7 +295,6 @@ input[type="text"]:focus {
     z-index: 999;
 }
 
-/* ===== Tôn trọng lựa chọn "giảm chuyển động" của người dùng ===== */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;

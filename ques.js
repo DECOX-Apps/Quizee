@@ -226,7 +226,6 @@ const tapHopCauHoi = [
     {t:"text",q:"Thuận vợ thuận chồng tát biển Đông cũng ___",a:["cạn"]},
     {t:"text",q:"Một điều nhịn là chín điều ___",a:["lành"]},
     {t:"text",q:"Khôn ngoan đối đáp người ngoài, gà cùng một mẹ ___",a:["chớ hoài đá nhau"]},
-  // --- 50 CÂU THÊM MỚI (TRẮC NGHIỆM) ---
     {t:"mcq", q:"Công cha như núi Thái Sơn, nghĩa mẹ như nước trong ___ chảy ra", o:["Suối", "Ngõ", "Sông", "Nguồn"], c:3},
     {t:"mcq", q:"Chuồn chuồn bay thấp thì mưa, bay cao thì nắng, bay vừa thì ___", o:["Râm", "Mát", "Khô", "Lạnh"], c:0},
     {t:"mcq", q:"Ếch ngồi đáy giếng coi trời bằng ___", o:["Cái vung", "Cái nia", "Ngọn cỏ", "Cái vung"], c:0}, // Sửa lại đáp án trùng
@@ -281,6 +280,59 @@ const tapHopCauHoi = [
     {t:"mcq", q:"Nói một đường làm một ___", o:["Hướng", "Nơi", "Lối", "Nẻo"], c:3}
 ];
 
+const boCauHoiSoSanh = [
+    {t:"mcq",q:"My brother is __________ than me.",o:["tall", "taller", "tallest", "more tall"],c:1},
+    {t:"mcq",q:"This test is as __________ as the last one.",o:["difficult", "more difficult", "most difficult", "difficulty"],c:0},
+    {t:"mcq",q:"Dogs are usually __________ than cats.",o:["friendly", "friendlier", "more friendly", "most friendly"],c:1},
+    {t:"mcq",q:"Her new car is __________ expensive than her old one.",o:["as", "much", "more", "the"],c:2},
+    {t:"mcq",q:"I don't run as __________ as my best friend.",o:["fast", "faster", "fastest", "more fast"],c:0},
+    {t:"mcq",q:"Yesterday was cold, but today is even __________.",o:["cold", "colder", "coldest", "more cold"],c:1},
+    {t:"mcq",q:"Learning English is __________ than learning German for many students.",o:["easy", "easier", "more easy", "easiest"],c:1},
+    {t:"mcq",q:"Your house is the same size __________ mine.",o:["as", "like", "than", "to"],c:0},
+    {t:"mcq",q:"The coffee here is __________ than the coffee at that small cafe.",o:["good", "better", "best", "more good"],c:1},
+    {t:"mcq",q:"Nam is not __________ tall as his father.",o:["than", "so", "more", "like"],c:1},
+    {t:"mcq",q:"This film is __________ interesting than the book.",o:["as", "more", "most", "less than"],c:1},
+    {t:"mcq",q:"Planes can fly __________ than birds.",o:["higher", "high", "highest", "more high"],c:0},
+    {t:"mcq",q:"She speaks English as __________ as a native speaker.",o:["fluent", "fluently", "more fluently", "most fluently"],c:1},
+    {t:"mcq",q:"His health is getting __________ day by day.",o:["bad", "worse", "worst", "badly"],c:1},
+    {t:"mcq",q:"Apple juice is not as __________ as orange juice.",o:["sweet", "sweeter", "sweetest", "more sweet"],c:0},
+    {t:"mcq",q:"The weather is getting __________ and __________.",o:["hot / hot", "hotter / hotter", "more hot / more hot", "hottest / hottest"],c:1},
+    {t:"mcq",q:"The __________ you study, the __________ grades you will get.",o:["hard / good", "harder / better", "hardest / best", "more hard / more better"],c:1},
+    {t:"mcq",q:"This hotel is __________ more comfortable than the one we stayed in last year.",o:["as", "so", "much", "very"],c:2},
+    {t:"mcq",q:"She drives __________ carefully than her husband.",o:["much", "far", "more", "many"],c:2},
+    {t:"mcq",q:"The __________ he got, the __________ patient he became.",o:["older / less", "old / little", "oldest / least", "more old / less"],c:0},
+    {t:"mcq",q:"It is getting __________ to find a good job nowadays.",o:["more and more difficult", "difficult and difficult", "most difficult", "more difficult and difficult"],c:0},
+    {t:"mcq",q:"He doesn't earn __________ money as his sister does.",o:["as many", "as much", "so many", "more much"],c:1},
+    {t:"mcq",q:"The earlier we leave, the __________ we will arrive.",o:["soon", "sooner", "soonest", "more soon"],c:1},
+    {t:"mcq",q:"This task is __________ easier than I expected.",o:["slightly", "as", "more", "so"],c:0},
+    {t:"mcq",q:"The more you practice, the __________ mistakes you will make.",o:["fewer", "less", "few", "little"],c:0},
+    {t:"mcq",q:"She works twice as __________ hours as I do.",o:["many", "much", "long", "more"],c:0},
+    {t:"mcq",q:"The city is becoming __________ crowded every year.",o:["more and more", "much and much", "many and many", "most and most"],c:0},
+    {t:"mcq",q:"The __________ you spend, the __________ you can save.",o:["more / less", "much / little", "most / least", "many / fewer"],c:0},
+    {t:"mcq",q:"My new laptop is far __________ efficient than the old one.",o:["more", "as", "most", "very"],c:0},
+    {t:"mcq",q:"He speaks English __________ more fluently than he did last year.",o:["considerably", "as", "so", "more"],c:0},
+    {t:"mcq",q:"The higher up you go, the __________ the air becomes.",o:["cold", "colder", "coldest", "more cold"],c:1},
+    {t:"mcq",q:"No one in the class is as intelligent __________ Linh.",o:["than", "as", "like", "with"],c:1},
+    {t:"mcq",q:"The joke was __________ funnier than I thought it would be.",o:["a lot", "more", "as", "so"],c:0},
+    {t:"mcq",q:"The __________ information you have, the __________ decisions you can make.",o:["better / wiser", "good / wise", "best / wisest", "more good / more wise"],c:0},
+    {t:"mcq",q:"The population of Tokyo is much larger than __________ of Hanoi.",o:["this", "that", "these", "those"],c:1},
+    {t:"mcq",q:"The more carefully you prepare for the interview, __________ confidence you will project.",o:["the more", "the most", "more", "much"],c:0},
+    {t:"mcq",q:"Rewriting: \"If you read more books, you will gain more knowledge.\" -> The more books you read, __________ knowledge you will gain.",o:["the more", "the most", "more", "much more"],c:0},
+    {t:"mcq",q:"Which sentence is grammatically CORRECT?",o:["The more I know him, the less I like him.", "The more I know him, the lesser I like him.", "The most I know him, the less I like him.", "The more I know him, I like him less."],c:0},
+    {t:"mcq",q:"The doctor advised him to walk a bit __________ every morning to improve his cardio health.",o:["farther", "further", "farthest", "furthermore"],c:0},
+    {t:"mcq",q:"Rewriting: \"Her English fluency improved as she practiced speaking every day.\" -> The more she practiced speaking English every day, __________ her fluency became.",o:["the better", "the good", "the best", "better"],c:0},
+    {t:"mcq",q:"He has __________ experience in project management than his senior colleague.",o:["considerably less", "considerably fewer", "far few", "much fewer"],c:0},
+    {t:"mcq",q:"The faster we walk, __________ we will reach our destination.",o:["the sooner", "sooner", "the soonest", "the more soon"],c:0},
+    {t:"mcq",q:"Choose the underlined part that needs correction: \"The more (A) advanced the technology becomes (B), the most (C) dependent on it we grow (D).\"",o:["A", "B", "C", "D"],c:2},
+    {t:"mcq",q:"The cost of living in Singapore is nearly twice __________ high as in Vietnam.",o:["as", "than", "so", "more"],c:0},
+    {t:"mcq",q:"The more stress you experience at work, __________ sleep quality you will have at night.",o:["the worse", "the worst", "the bad", "worse"],c:0},
+    {t:"mcq",q:"Rewriting: \"As demand increases, prices go up higher.\" -> The higher the demand, __________.",o:["the higher the prices go", "the prices go higher", "higher the prices go", "the highest the prices go"],c:0},
+    {t:"mcq",q:"Living in a quiet rural area is far __________ stressful than living in a bustling metropolis.",o:["less", "lesser", "least", "few"],c:0},
+    {t:"mcq",q:"Choose the sentence that best combines the two statements: \"You exercise regularly. You feel healthy.\"",o:["The more regularly you exercise, the healthier you feel.", "The most regularly you exercise, the healthier you feel.", "The more you exercise regularly, the more healthy you feel.", "The regular you exercise, the healthiest you feel."],c:0},
+    {t:"mcq",q:"My elder brother earns __________ money than I do, but he works __________ hours.",o:["more / fewer", "more / less", "much / fewer", "many / less"],c:0},
+    {t:"mcq",q:"The more detailed the instructions are, __________ confusion the students will experience.",o:["the less", "the fewer", "the least", "less"],c:0}
+];
+
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = tapHopCauHoi;
+    module.exports = { tapHopCauHoi, boCauHoiSoSanh };
 }

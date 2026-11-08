@@ -1,22 +1,16 @@
-// ===== TRẠNG THÁI TRÒ CHƠI =====
 let danhSachHienTai = [];
 let viTriHienTai = 0;
 let soCauDung = 0;
 let soCauSai = 0;
 let soCauBoQua = 0;
-let tenCuaNguoiChoi = "";
+let cheDoCoDinh = false;
 let thoiGianBatDau = 0;
 let dangPhatNhac = false;
-
-// Bộ đếm giờ (đã chuyển sang dùng CSS transform + 1 timeout duy nhất thay vì setInterval liên tục,
-// giúp trình duyệt giao việc animate cho GPU thay vì tính toán layout mỗi 100ms)
 let dongHoDemNguoc;
 let henGioCanhBao1;
 let henGioCanhBao2;
 let thoiGianChuyenCau;
-const THOI_GIAN_MOI_CAU = 20; // giây (giữ nguyên tổng thời gian như bản gốc: 0.5% mỗi 100ms x 200 lần)
-
-// Debounce cho việc tự căn chỉnh kích thước khi xoay màn hình / đổi cỡ cửa sổ
+const THOI_GIAN_MOI_CAU = 20;
 let henGioCanChinh;
 
 function batTatNhac() {
@@ -46,23 +40,47 @@ function xaoTronDapAn(cauHoi) {
     return cauHoi;
 }
 
-function batDauTroChoi() {
-    tenCuaNguoiChoi = document.getElementById('ten-nguoi-choi').value.trim();
-    if (!tenCuaNguoiChoi) return alert("Enter Name");
-
-    // Đặt lại toàn bộ trạng thái mỗi lần bắt đầu (cần thiết vì giờ là 1 trang duy nhất,
-    // không còn tải lại trang giữa các lượt chơi như bản 2-trang trước đây)
+function batDauTroChoi(nguon, coDinh) {
     viTriHienTai = 0;
     soCauDung = 0;
     soCauSai = 0;
     soCauBoQua = 0;
+    cheDoCoDinh = !!coDinh;
 
-    danhSachHienTai = [...tapHopCauHoi].sort(() => Math.random() - 0.5).map(xaoTronDapAn);
+    const ban = nguon.map(c => ({ ...c, o: c.o ? [...c.o] : c.o }));
+    danhSachHienTai = coDinh ? ban : ban.sort(() => Math.random() - 0.5).map(xaoTronDapAn);
     thoiGianBatDau = Date.now();
 
     document.getElementById('bang-dang-nhap').classList.remove('hien-thi');
+    document.getElementById('bang-nhap-ma').classList.remove('hien-thi');
     document.getElementById('bang-cau-hoi').classList.add('hien-thi');
     taiCauHoiHienTai();
+}
+
+function tiepTucDoVui() {
+    batDauTroChoi(tapHopCauHoi, false);
+}
+
+function moOMaCode() {
+    document.getElementById('bang-dang-nhap').classList.remove('hien-thi');
+    document.getElementById('bang-nhap-ma').classList.add('hien-thi');
+    const o = document.getElementById('o-nhap-ma');
+    o.value = '';
+    o.focus();
+}
+
+function quayLaiMenu() {
+    document.getElementById('bang-nhap-ma').classList.remove('hien-thi');
+    document.getElementById('bang-dang-nhap').classList.add('hien-thi');
+}
+
+function xacNhanMa() {
+    const ma = document.getElementById('o-nhap-ma').value.trim();
+    if (ma === "037217") {
+        batDauTroChoi(boCauHoiSoSanh, true);
+    } else {
+        alert("Mã không đúng!");
+    }
 }
 
 function taiCauHoiHienTai() {
@@ -71,8 +89,6 @@ function taiCauHoiHienTai() {
 
     const cauHoi = danhSachHienTai[viTriHienTai];
     document.getElementById('van-ban-tien-do').innerText = `CÂU ${viTriHienTai + 1} / ${danhSachHienTai.length}`;
-
-    // Ép hiệu ứng xuất hiện chạy lại cho câu hỏi mới (xoá rồi ép reflow rồi thêm lại class)
     const tieuDe = document.getElementById('tieu-de-cau-hoi');
     tieuDe.classList.remove('hieu-ung-vao');
     void tieuDe.offsetWidth;
@@ -90,7 +106,7 @@ function taiCauHoiHienTai() {
             const nutBam = document.createElement('button');
             nutBam.className = 'nut-chon';
             nutBam.innerText = luaChon;
-            nutBam.style.animationDelay = (viTri * 0.07) + 's'; // xuất hiện lần lượt từng nút
+            nutBam.style.animationDelay = (viTri * 0.07) + 's';
             nutBam.onclick = () => kiemTraTracNghiem(viTri, cauHoi.c);
             khuVuc.appendChild(nutBam);
         });
@@ -114,9 +130,6 @@ function taiCauHoiHienTai() {
     document.getElementById('nut-bo-qua').disabled = false;
     kichHoatDongHo();
 }
-
-// Dừng đồng hồ đếm ngược và "đóng băng" thanh thời gian đúng tại vị trí hiện tại
-// (thay vì để hiệu ứng CSS tự chạy tiếp tới 0 sau khi người chơi đã trả lời xong)
 function dungDongHo() {
     clearTimeout(dongHoDemNguoc);
     clearTimeout(henGioCanhBao1);
@@ -133,13 +146,9 @@ function kichHoatDongHo() {
     const thanhThoiGian = document.getElementById('thanh-thoi-gian');
     dungDongHo();
     thanhThoiGian.classList.remove('canh-bao', 'nguy-hiem');
-
-    // Đặt lại về đầy 100% ngay lập tức, không hiệu ứng
     thanhThoiGian.style.transition = 'none';
     thanhThoiGian.style.transform = 'scaleX(1)';
-    void thanhThoiGian.offsetWidth; // ép reflow 1 lần để hiệu ứng bên dưới chạy đúng từ đầu
-
-    // Từ đây giao cho GPU: chỉ animate "transform", không đụng tới "width" (tránh layout liên tục)
+    void thanhThoiGian.offsetWidth;
     thanhThoiGian.style.transition = `transform ${THOI_GIAN_MOI_CAU}s linear, background-color 0.4s ease`;
     thanhThoiGian.style.transform = 'scaleX(0)';
 
@@ -231,13 +240,11 @@ function hienThiKetQua(diem, dung, sai, boQua, thoiGian) {
         Thoi gian: <b>${thoiGian}</b> giây
     `;
 }
-
-// Hiệu ứng đếm số điểm chạy dần lên (dùng requestAnimationFrame, mượt và nhẹ cho phần cứng)
 function demSoDiem(phanTu, giaTriDich, thoiLuong = 1200) {
     const batDau = performance.now();
     function buoc(hienTai) {
         const tienDo = Math.min((hienTai - batDau) / thoiLuong, 1);
-        const eased = 1 - Math.pow(1 - tienDo, 3); // ease-out
+        const eased = 1 - Math.pow(1 - tienDo, 3);
         phanTu.innerText = Math.round(eased * giaTriDich) + "D";
         if (tienDo < 1) requestAnimationFrame(buoc);
     }
@@ -250,13 +257,9 @@ function choiLaiTuDau() {
     soCauSai = 0;
     soCauBoQua = 0;
     danhSachHienTai = [];
-    const oTen = document.getElementById('ten-nguoi-choi');
-    if (oTen) oTen.value = '';
     document.getElementById('bang-ket-qua').classList.remove('hien-thi');
     document.getElementById('bang-dang-nhap').classList.add('hien-thi');
 }
-
-// ===== HIỆU ỨNG PHÁO HOA GIẤY KHI HOÀN THÀNH (canvas + requestAnimationFrame) =====
 function chayHieuUngPhaoHoa() {
     const canvas = document.getElementById('phao-hoa');
     if (!canvas) return;
@@ -306,9 +309,6 @@ function chayHieuUngPhaoHoa() {
     }
     requestAnimationFrame(ve);
 }
-
-// ===== HÀM TỰ CĂN CHỈNH: đảm bảo canvas luôn khớp kích thước màn hình =====
-// (phù hợp mọi loại thiết bị: điện thoại, máy tính bảng, desktop, kể cả khi xoay ngang/dọc)
 function canChinhKichThuoc() {
     const canvas = document.getElementById('phao-hoa');
     if (canvas) {

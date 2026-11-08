@@ -23,8 +23,15 @@
     <div id="bang-dang-nhap" class="the-giao-dien hien-thi">
         <h1>🚀 HỆ THỐNG QUIZEE 🚀</h1>
         <p>Quiz, Coding By GitHub</p>
-        <input type="text" id="ten-nguoi-choi" placeholder="Nhập Tên...">
-        <button class="nut-hanh-dong" onclick="batDauTroChoi()">Bắt Đầu Ngay</button>
+        <button class="nut-hanh-dong" onclick="tiepTucDoVui()">Tiếp tục với đố vui...</button>
+        <button class="nut-hanh-dong" onclick="moOMaCode()">Nhập mã...</button>
+    </div>
+
+    <div id="bang-nhap-ma" class="the-giao-dien">
+        <h2>🔑 NHẬP MÃ</h2>
+        <input type="text" id="o-nhap-ma" placeholder="Nhập mã..." inputmode="numeric" autocomplete="off" onkeydown="if(event.key==='Enter')xacNhanMa()">
+        <button class="nut-hanh-dong" onclick="xacNhanMa()">Xác Nhận</button>
+        <button class="nut-hanh-dong nut-bo-qua" onclick="quayLaiMenu()">Quay Lại</button>
     </div>
 
     <div id="bang-cau-hoi" class="the-giao-dien">
